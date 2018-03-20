@@ -7,7 +7,8 @@ import time
 
 from flask import Flask, jsonify, render_template, redirect, request, url_for
 from konlpy.corpus import kolaw
-from konlpy.tag import Hannanum, Kkma, Mecab
+from konlpy.tag import Hannanum, Kkma, Mecab, Twitter
+
 import regex
 
 from settings import BRAND, SERVER_SETTINGS
@@ -21,10 +22,13 @@ with open('%s/templates/default.svg' % HERE, 'r') as f:
 def get_tags(text, minsyl=1, ntags=10, tagger='', posnv='N', stopwords=[]):
     if tagger:
         # FIXME: count가 맞지 않음
-        tags = globals()[tagger]().pos(text)
-        filtered = [t for t in tags if t[1][0] in posnv]
-        words = [w + u'다' if t[0] in 'VP' and not w.endswith(u'다') else w\
-                for w, t in filtered]
+        if tagger == "Twitter":
+            words = Twitter().nouns(text)
+        else:
+            tags = globals()[tagger]().pos(text)
+            filtered = [t for t in tags if t[1][0] in posnv]
+            words = [w + u'다' if t[0] in 'VP' and not w.endswith(u'다') else w\
+                    for w, t in filtered]
     else:
         words = regex.findall(ur'[\p{Hangul}|\p{Latin}|\p{Han}]+', text)
 

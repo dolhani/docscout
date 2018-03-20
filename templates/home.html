@@ -33,7 +33,7 @@ $(function() {
   d3.layout.cloud().size([width, height])
     .words({{ tags|tojson|safe }})
     .padding(5)
-    .rotate(function() { return ~~(Math.random() * 2) * 90 * {{ request.form.rotated|default(1) }} ; })
+    .rotate(function() { return ~~(Math.random() * 2) * 90 * {{ request.form.rotated|default(0) }} ; })
     .fontSize(function(d) { return d.size; })
     .on("end", draw)
     .start();
@@ -42,7 +42,7 @@ $(function() {
   var info = d3.select("#info");
   info.append("span").text("Time: " + Math.round({{ time|default(0) }}*100)/100 + "s");
   info.append("span").text("Text length: " + {{ textlen }});
-  info.append("span").text("ntags: " + {{ ntags|default(10) }});
+  info.append("span").text("ntags: " + {{ ntags|default(30) }});
 
   var style = document.createElement('style');
   style.type = 'text/css';

@@ -35,8 +35,8 @@
         <div class="option">
             <p>회전</p>
             <select name="rotated" class="form-control">
-                <option value=1{% if request.form.rotated=='1' %} selected{% endif %}>True</option>
                 <option value=0{% if request.form.rotated=='0' %} selected{% endif %}>False</option>
+                <option value=1{% if request.form.rotated=='1' %} selected{% endif %}>True</option>
             </select>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <div class="option">
             <p>단어 개수</p>
             <select name="ntags" class="form-control">
-                {% for i in range(10, 110, 10) %}
+                {% for i in range(20, 110, 10) %}
                 <option{% if request.form.ntags==i|string() %} selected{% endif %}>{{ i }}</option>
                 {% endfor %}
             </select>
@@ -69,6 +69,7 @@
                 <option value="Hannanum"{% if request.form.tagger=='Hannanum' %} selected{% endif %}>한나눔</option>
                 <option value="Kkma"{% if request.form.tagger=='Kkma' %} selected{% endif %}>꼬꼬마</option>
                 <option value="Mecab"{% if request.form.tagger=='Mecab' %} selected{% endif %}>MeCab-ko</option>
+                <option value="Twitter"{% if request.form.tagger=='Twitter' %} selected{% endif %}>Twitter</option>
             </select>
         </div>
     </div>
